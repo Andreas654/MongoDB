@@ -5,6 +5,7 @@
   "workspaceFolder": "/workspaces/MongoDB",
   "remoteUser": "vscode",
   "forwardPorts": [27017],
+  "postCreateCommand": "curl -o /tmp/mongosh.tgz https://downloads.mongodb.com/compass/mongosh-2.3.6-linux-x64.tgz && tar -xzf /tmp/mongosh.tgz -C /tmp && sudo mv /tmp/mongosh-2.3.6-linux-x64/bin/* /usr/local/bin/ && rm -rf /tmp/mongosh.tgz /tmp/mongosh-2.3.6-linux-x64 && sudo chmod +x /usr/local/bin/mongosh",
   "postStartCommand": "/bin/bash -lc 'echo \"Warte auf MongoDB...\"; for i in {1..30}; do if mongosh --host mongo -u \"$MONGO_INITDB_ROOT_USERNAME\" -p \"$MONGO_INITDB_ROOT_PASSWORD\" --authenticationDatabase admin --eval \"db.adminCommand({ping:1})\" >/dev/null 2>&1; then echo \"MongoDB ist bereit.\"; break; fi; echo -n \".\"; sleep 1; done; echo \"Starte mongosh per Kommando: mongosh --host mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin\"'",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"

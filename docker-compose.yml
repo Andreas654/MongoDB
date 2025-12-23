@@ -27,6 +27,7 @@ services:
       - ./:/workspaces/MongoDB:cached
     env_file:
       - .env
+    command: sleep infinity
 
 volumes:
   mongo_data:

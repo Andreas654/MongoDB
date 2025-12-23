@@ -1,17 +1,13 @@
-# Devcontainer base image
-FROM mcr.microsoft.com/devcontainers/base:ubuntu
+# Devcontainer base image for Alpine Linux
+FROM mcr.microsoft.com/devcontainers/base:alpine
 
-# Install prerequisites and mongosh (MongoDB Shell)
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl ca-certificates gnupg \
-  && curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
-     gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor \
-  && echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | \
-     tee /etc/apt/sources.list.d/mongodb-org-8.0.list \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends mongodb-mongosh \
-  && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+# Install mongosh (MongoDB Shell) for Alpine
+RUN apk add --no-cache bash curl && \
+    curl -o mongosh.tgz https://downloads.mongodb.com/compass/mongosh-2.3.6-linux-x64.tgz && \
+    tar -xzf mongosh.tgz && \
+    mv mongosh-2.3.6-linux-x64/bin/* /usr/local/bin/ && \
+    rm -rf mongosh.tgz mongosh-2.3.6-linux-x64 && \
+    chmod +x /usr/local/bin/mongosh
 
 # Use non-root user from base image
 USER vscode
