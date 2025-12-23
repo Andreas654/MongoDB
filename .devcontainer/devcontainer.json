@@ -5,7 +5,7 @@
   "workspaceFolder": "/workspaces/MongoDB",
   "remoteUser": "vscode",
   "forwardPorts": [27017],
-  "postStartCommand": "/bin/bash -lc 'echo \"Warte auf MongoDB...\"; for i in {1..30}; do if mongosh --host mongo -u \"$MONGO_INITDB_ROOT_USERNAME\" -p \"$MONGO_INITDB_ROOT_PASSWORD\" --authenticationDatabase admin --eval \"db.adminCommand({ping:1})\" >/dev/null 2>&1; then echo \"MongoDB ist bereit.\"; break; fi; echo -n \".\"; sleep 1; done; echo \"Starte mongosh per Kommando: mongosh --host mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin\"'",
+  "postStartCommand": "/bin/bash -lc 'echo \"Waiting for MongoDB...\"; for i in {1..30}; do if mongosh --host mongo -u \"$MONGO_INITDB_ROOT_USERNAME\" -p \"$MONGO_INITDB_ROOT_PASSWORD\" --authenticationDatabase admin --eval \"db.adminCommand({ping:1})\" >/dev/null 2>&1; then echo \"MongoDB is ready.\"; break; fi; echo -n \".\"; sleep 1; done; echo \"Connect to MongoDB with: mongosh --host mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin\"'",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
