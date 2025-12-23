@@ -29,8 +29,10 @@ Schnellstart (lokal)
 Schnellstart (Codespaces / Devcontainer)
 - Öffne das Repository in GitHub Codespaces oder mit VS Code Remote - Containers -> "Reopen in Container".
 - Codespaces / devcontainer baut automatisch die im `docker-compose.yml` definierten Services.
-- Öffne ein Terminal im Workspace-Container und führe aus:
-  - mongosh --host mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin
+- Öffne ein Terminal im Workspace-Container:
+   - mongosh startet nun automatisch beim Öffnen eines interaktiven Terminals (wartet bis MongoDB bereit ist).
+   - Falls du das nicht möchtest, setze vor dem Terminal-Start die Variable `DISABLE_AUTO_MONGOSH=1`.
+   - Manuell starten geht weiterhin: mongosh --host mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin
 
 Troubleshooting: Fehler beim Start des Workspace
 Fehlermeldung (Beispiel):
