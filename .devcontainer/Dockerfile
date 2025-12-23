@@ -2,7 +2,8 @@
 FROM mcr.microsoft.com/devcontainers/base:alpine
 
 # Install mongosh (MongoDB Shell) for Alpine
-RUN apk add --no-cache bash curl && \
+# gcompat/libc6-compat provide the glibc loader needed by the upstream mongosh binary
+RUN apk add --no-cache bash curl gcompat libc6-compat && \
     curl -o mongosh.tgz https://downloads.mongodb.com/compass/mongosh-2.3.6-linux-x64.tgz && \
     tar -xzf mongosh.tgz && \
     mv mongosh-2.3.6-linux-x64/bin/* /usr/local/bin/ && \
