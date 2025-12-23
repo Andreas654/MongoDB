@@ -1,19 +1,12 @@
-# Devcontainer base image for Alpine Linux
-FROM mcr.microsoft.com/devcontainers/base:alpine
+# Devcontainer base image for Debian (glibc)
+FROM mcr.microsoft.com/devcontainers/base:bookworm
 
-# Install glibc runtime (mongosh binary is built against glibc and needs resolver symbols)
-ARG GLIBC_VERSION=2.39-r1
-RUN apk add --no-cache bash curl ca-certificates && \
-    curl -sSL https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -o /etc/apk/keys/sgerrand.rsa.pub && \
-    curl -sSL https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk -o /tmp/glibc.apk && \
-    apk add --no-cache /tmp/glibc.apk && \
-    rm /tmp/glibc.apk
-
-# Install mongosh (MongoDB Shell) for Alpine (uses glibc from above)
-RUN curl -o mongosh.tgz https://downloads.mongodb.com/compass/mongosh-2.3.6-linux-x64.tgz && \
-    tar -xzf mongosh.tgz && \
-    mv mongosh-2.3.6-linux-x64/bin/* /usr/local/bin/ && \
-    rm -rf mongosh.tgz mongosh-2.3.6-linux-x64 && \
+# Install mongosh (MongoDB Shell) using the glibc-based tarball
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates && rm -rf /var/lib/apt/lists/* && \
+    curl -o /tmp/mongosh.tgz https://downloads.mongodb.com/compass/mongosh-2.3.6-linux-x64.tgz && \
+    tar -xzf /tmp/mongosh.tgz -C /tmp && \
+    mv /tmp/mongosh-2.3.6-linux-x64/bin/* /usr/local/bin/ && \
+    rm -rf /tmp/mongosh.tgz /tmp/mongosh-2.3.6-linux-x64 && \
     chmod +x /usr/local/bin/mongosh
 
 # Auto-start mongosh when opening an interactive shell (set DISABLE_AUTO_MONGOSH=1 to skip)
