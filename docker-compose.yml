@@ -22,8 +22,7 @@ services:
       context: .devcontainer
       dockerfile: Dockerfile
     depends_on:
-      mongo:
-        condition: service_healthy
+      - mongo
     volumes:
       - ./:/workspaces/MongoDB:cached
     env_file:
