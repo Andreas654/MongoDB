@@ -27,8 +27,6 @@ services:
       - ./:/workspaces/MongoDB:cached
     env_file:
       - .env
-    ports:
-      - "27017:27017"
 
 volumes:
   mongo_data:
